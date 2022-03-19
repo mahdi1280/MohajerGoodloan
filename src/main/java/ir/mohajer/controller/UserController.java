@@ -22,6 +22,7 @@ public class UserController {
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("users",usersService.findAll());
+        model.addAttribute("serverTime", 212);
         return "index";
     }
 
