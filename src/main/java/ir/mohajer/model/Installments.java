@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 public class Installments extends BaseEntity {
 
     private int amount;
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
     private UserLoan userLoan;
 
     public int getAmount() {
@@ -25,11 +26,11 @@ public class Installments extends BaseEntity {
     }
 
     @CreatedDate
-    public LocalDateTime getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 

@@ -3,8 +3,10 @@ package ir.mohajer.controller;
 import ir.mohajer.dto.response.DetailsResponse;
 import ir.mohajer.exception.ErrorMessage;
 import ir.mohajer.exception.RuleException;
+import ir.mohajer.model.Installments;
 import ir.mohajer.model.UserLoan;
 import ir.mohajer.model.Users;
+import ir.mohajer.service.installment.InstallmentsService;
 import ir.mohajer.service.userloan.UserLoanService;
 import ir.mohajer.service.userservice.UsersService;
 import org.springframework.stereotype.Controller;
@@ -21,10 +23,12 @@ public class UsersController {
 
     private final UserLoanService userLoanService;
     private final UsersService usersService;
+    private final InstallmentsService installmentsService;
 
-    public UsersController(UserLoanService userLoanService, UsersService usersService) {
+    public UsersController(UserLoanService userLoanService, UsersService usersService, InstallmentsService installmentsService) {
         this.userLoanService = userLoanService;
         this.usersService = usersService;
+        this.installmentsService = installmentsService;
     }
 
     @GetMapping("/{id}")
@@ -38,6 +42,9 @@ public class UsersController {
 
     @GetMapping("/details/{id}")
     public String showLoanDetails(@PathVariable long id, Model model){
+        UserLoan userLoan = userLoanService.findById(id).orElseThrow(() -> new RuleException(ErrorMessage.error("user.loan.not.found")));
+        List<Installments> byLoanUserId = installmentsService.findByLoanUserId(userLoan);
+        model.addAttribute("details",byLoanUserId);
         return "details";
     }
 

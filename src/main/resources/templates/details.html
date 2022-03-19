@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+    <style th:insert="styleTable"></style>
+</head>
+<body>
+<div th:insert="header">...</div>
+
+    <table class="container">
+        <thead>
+        <tr>
+            <th><h1>ردیف</h1></th>
+            <th><h1>مقدار پرداختی</h1></th>
+            <th><h1>زمان پرداخت</h1></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+                th:each="detail : ${details}">
+            <td th:text="${detail.id}" />
+            <td th:text="${detail.amount}" />
+            <td th:text="${detail.creationDate}" />
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
