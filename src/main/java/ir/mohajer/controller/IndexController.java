@@ -6,17 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class UserController {
+public class IndexController {
 
     private final UsersService usersService;
 
-    public UserController(UsersService usersService) {
+    public IndexController(UsersService usersService) {
         this.usersService = usersService;
-    }
-
-    @GetMapping("/login")
-    public String login(){
-        return "login";
     }
 
     @GetMapping("/")
@@ -26,8 +21,4 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/admin")
-    public String admin(){
-        return "admin";
-    }
 }

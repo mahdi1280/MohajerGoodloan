@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Details</title>
+    <style th:insert="styleTable"></style>
+</head>
+<body>
+    <div th:insert="header">...</div>
+    <h2 th:text="'نام:'+ ${userLoan.users.name}"/>
+    <table class="container">
+        <thead>
+        <tr>
+            <th><h1>ردیف</h1></th>
+            <th><h1>نام وام</h1></th>
+            <th><h1>مقدار وام</h1></th>
+            <th><h1>مقدار پرداخت شده</h1></th>
+            <th><h1>وضعیت</h1></th>
+            <th><h1>جزییات</h1></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+                th:each="user : ${userLoan.userLoans}">
+            <td th:text="${user.id}" />
+            <td th:text="${user.loan.name}" />
+            <td th:text="${user.loan.amount}" />
+            <td>aasdasd</td>
+            <td>
+                <span th:if="${user.winner == false}" class="status">برنده نشده</span>
+                <span th:if="${user.winner == true}" class="status">برنده نشده</span>
+            </td>
+            <td class="details"><a th:href="@{'/users/details/' + ${user.id}}">جزییات</a></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

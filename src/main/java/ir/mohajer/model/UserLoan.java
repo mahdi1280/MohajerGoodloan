@@ -2,10 +2,7 @@ package ir.mohajer.model;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,6 +12,7 @@ public class UserLoan extends BaseEntity{
     private LocalDateTime creationDate;
     private Users users;
     private Loan loan;
+    private boolean winner=false;
 
     @CreatedDate
     public LocalDateTime getCreationDate() {
@@ -41,5 +39,14 @@ public class UserLoan extends BaseEntity{
 
     public void setLoan(Loan loan) {
         this.loan = loan;
+    }
+
+    @Column(columnDefinition = "boolean default false")
+    public boolean isWinner() {
+        return winner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
     }
 }

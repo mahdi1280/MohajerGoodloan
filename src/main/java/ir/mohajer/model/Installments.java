@@ -25,7 +25,6 @@ public class Installments extends BaseEntity {
     }
 
     @CreatedDate
-
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
@@ -35,12 +34,11 @@ public class Installments extends BaseEntity {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-
-    public UserLoan getUserLoan1() {
+    public UserLoan getUserLoan() {
         return userLoan;
     }
 
-    public void setUserLoan1(UserLoan userLoan) {
+    public void setUserLoan(UserLoan userLoan) {
         this.userLoan = userLoan;
     }
 }
