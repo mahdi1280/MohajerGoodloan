@@ -32,4 +32,9 @@ public class UserLoanServiceImpl implements UserLoanService {
     public int getCountJoinLoan(Loan loan) {
         return userLoanRepository.getCountJoinLoan(loan.getId());
     }
+
+    @Override
+    public List<UserLoan> findByLoan(Loan loan) {
+        return userLoanRepository.findByLoan(loan);
+    }
 }

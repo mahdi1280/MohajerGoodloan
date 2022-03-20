@@ -5,6 +5,7 @@ import ir.mohajer.repository.LoanRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LoanServiceImpl implements LoanService{
@@ -19,5 +20,10 @@ public class LoanServiceImpl implements LoanService{
     @Override
     public List<Loan> findAll() {
         return loanRepository.findAll();
+    }
+
+    @Override
+    public Optional<Loan> findById(long loanId) {
+        return loanRepository.findById(loanId);
     }
 }
