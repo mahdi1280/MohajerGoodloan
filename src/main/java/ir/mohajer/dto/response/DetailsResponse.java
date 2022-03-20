@@ -1,18 +1,15 @@
 package ir.mohajer.dto.response;
 
-import ir.mohajer.model.UserLoan;
-import ir.mohajer.model.Users;
-
 import java.io.Serializable;
 import java.util.List;
 
 public class DetailsResponse implements Serializable {
 
-    private final Users users;
+    private final UserResponse userResponse;
     private final List<UserLoanResponse> userLoans;
 
-    public DetailsResponse(Users users, List<UserLoanResponse> userLoans) {
-        this.users = users;
+    public DetailsResponse(UserResponse userResponse, List<UserLoanResponse> userLoans) {
+        this.userResponse = userResponse;
         this.userLoans = userLoans;
     }
 
@@ -20,8 +17,8 @@ public class DetailsResponse implements Serializable {
         return new Builder();
     }
 
-    public Users getUsers() {
-        return users;
+    public UserResponse getUserResponse() {
+        return userResponse;
     }
 
     public List<UserLoanResponse> getUserLoans() {
@@ -30,14 +27,14 @@ public class DetailsResponse implements Serializable {
 
     public static class Builder{
 
-        private Users users;
+        private UserResponse userResponse;
         private List<UserLoanResponse> userLoans;
 
         private Builder() {
         }
 
-        public Builder setUsers(Users users) {
-            this.users = users;
+        public Builder setUserResponse(UserResponse userResponse) {
+            this.userResponse = userResponse;
             return this;
         }
 
@@ -47,7 +44,7 @@ public class DetailsResponse implements Serializable {
         }
 
         public DetailsResponse build(){
-            return new DetailsResponse(users,userLoans);
+            return new DetailsResponse(userResponse,userLoans);
         }
     }
 }

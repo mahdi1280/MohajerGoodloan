@@ -2,6 +2,7 @@ package ir.mohajer.controller;
 
 import ir.mohajer.dto.response.DetailsResponse;
 import ir.mohajer.dto.response.UserLoanResponse;
+import ir.mohajer.dto.response.UserResponse;
 import ir.mohajer.exception.ErrorMessage;
 import ir.mohajer.exception.RuleException;
 import ir.mohajer.model.Installments;
@@ -52,8 +53,16 @@ public class UsersController {
 
         private DetailsResponse createDetailsResponse(Users user, List<UserLoan> byUser) {
         return DetailsResponse.builder()
-                .setUsers(user)
+                .setUserResponse(createUserResponse(user))
                 .setUserLoans(createUserLoanResponse(byUser))
+                .build();
+    }
+
+    private UserResponse createUserResponse(Users user) {
+        return UserResponse.builder()
+                .setName(user.getName())
+                .setId(user.getId())
+                .setNationalCode(user.getNationalCode())
                 .build();
     }
 
