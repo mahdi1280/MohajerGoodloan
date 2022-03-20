@@ -1,5 +1,6 @@
 package ir.mohajer.controller;
 
+import ir.mohajer.dto.request.LoanRequest;
 import ir.mohajer.dto.response.LoanResponse;
 import ir.mohajer.dto.response.UserResponse;
 import ir.mohajer.exception.ErrorMessage;
@@ -12,11 +13,13 @@ import ir.mohajer.service.loan.LoanService;
 import ir.mohajer.service.userloan.UserLoanService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -33,8 +36,21 @@ public class LoanController {
         this.installmentsService = installmentsService;
     }
 
+    @PostMapping
+    public String save(@ModelAttribute(value = "loanRequest") @Valid LoanRequest loanRequest, BindingResult result,Model model) {
+        Optional<Loan> loan = loanService.fidByName(loanRequest.getName());
+        if(loan.isPresent()) {
+            result.rejectValue("name", "error.user", "exist name");
+        }
+        Loan saveLoan=createLoan(loanRequest);
+        loanService.save(saveLoan);
+        List<LoanResponse> loanResponse = createLoanResponse(loanService.findAll());
+        model.addAttribute("loans",loanResponse);
+        return "loan";
+    }
+
     @GetMapping
-    public String getAll(Model model) {
+    public String getAll(LoanRequest loanRequest,Model model) {
         List<LoanResponse> loanResponse = createLoanResponse(loanService.findAll());
         model.addAttribute("loans", loanResponse);
         return "loan";
@@ -69,5 +85,13 @@ public class LoanController {
                                 .setAmount(loan.getAmount())
                                 .build())
                 .collect(Collectors.toList());
+    }
+
+
+    private Loan createLoan(LoanRequest loanRequest) {
+        return Loan.builder()
+                .amount(loanRequest.getAmount())
+                .name(loanRequest.getName())
+                .build();
     }
 }

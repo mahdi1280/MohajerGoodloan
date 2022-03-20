@@ -34,6 +34,7 @@ public class UsersController {
         this.installmentsService = installmentsService;
     }
 
+    @
     @GetMapping("/{id}")
     public String showLoan(@PathVariable long id, Model model){
         Users user = usersService.findById(id).orElseThrow(()->new RuleException(ErrorMessage.error("user.not.found")));

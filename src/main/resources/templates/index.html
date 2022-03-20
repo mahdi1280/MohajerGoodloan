@@ -33,6 +33,27 @@
         <td class="details"><a th:href="@{'/users/' + ${user.id}}">جزییات</a></td>
     </tr>
     </tbody>
+
+    <button class="open-button" onclick="openForm()">ایجاد</button>
+    <div class="form-popup" id="myForm">
+        <form action="#" th:action="@{/users}" th:object="${userRequest}" method="post" class="form-container">
+            <h1>قرض الحسنه</h1>
+            <div class="form-group">
+                <label for="name"><b>نام</b></label>
+                <input class="form-control" type="text"  th:field="*{name}" id="name" placeholder="نام" name="name">
+                <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                <p th:if="${#fields.hasErrors('name')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+            </div>
+            <div class="form-group">
+                <label for="amount"><b>مقدار پول</b></label>
+                <input class="form-control" type="number"  th:field="*{amount}" id="amount" placeholder="مقدار پول" name="name">
+                <div class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
+                <p th:if="${#fields.hasErrors('amount')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+            </div>
+            <button type="submit" class="btn">ایجاد</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">بستن</button>
+        </form>
+    </div>
 </table>
 </body>
 </html>
