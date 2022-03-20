@@ -9,9 +9,9 @@ import java.util.List;
 public class DetailsResponse implements Serializable {
 
     private final Users users;
-    private final List<UserLoan> userLoans;
+    private final List<UserLoanResponse> userLoans;
 
-    public DetailsResponse(Users users, List<UserLoan> userLoans) {
+    public DetailsResponse(Users users, List<UserLoanResponse> userLoans) {
         this.users = users;
         this.userLoans = userLoans;
     }
@@ -24,14 +24,14 @@ public class DetailsResponse implements Serializable {
         return users;
     }
 
-    public List<UserLoan> getUserLoans() {
+    public List<UserLoanResponse> getUserLoans() {
         return userLoans;
     }
 
     public static class Builder{
 
         private Users users;
-        private List<UserLoan> userLoans;
+        private List<UserLoanResponse> userLoans;
 
         private Builder() {
         }
@@ -41,7 +41,7 @@ public class DetailsResponse implements Serializable {
             return this;
         }
 
-        public Builder setUserLoans(List<UserLoan> userLoans) {
+        public Builder setUserLoans(List<UserLoanResponse> userLoans) {
             this.userLoans = userLoans;
             return this;
         }

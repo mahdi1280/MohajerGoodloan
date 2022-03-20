@@ -28,7 +28,7 @@
             <td th:text="${user.id}" />
             <td th:text="${user.loan.name}" />
             <td th:text="${user.loan.amount}" />
-            <td>aasdasd</td>
+            <td th:text="${user.amount}" />
             <td>
                 <span th:if="${user.winner == false}" class="status">برنده نشده</span>
                 <span th:if="${user.winner == true}" class="status">برنده نشده</span>

@@ -1,5 +1,6 @@
 package ir.mohajer.service.userloan;
 
+import ir.mohajer.model.Loan;
 import ir.mohajer.model.UserLoan;
 import ir.mohajer.model.Users;
 
@@ -11,4 +12,6 @@ public interface UserLoanService {
     List<UserLoan> findByUser(Users user);
 
     Optional<UserLoan> findById(long id);
+
+    int getCountJoinLoan(Loan loan);
 }

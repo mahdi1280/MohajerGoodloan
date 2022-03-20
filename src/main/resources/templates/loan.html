@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>loan</title>
+    <style th:insert="styleTable"></style>
+</head>
+<body>
+<div th:insert="header">...</div>
+<table class="container">
+    <thead>
+    <tr>
+        <th><h1>ردیف</h1></th>
+        <th><h1>نام وام</h1></th>
+        <th><h1>تعداد عضو شده</h1></th>
+        <th><h1>مقدار وام</h1></th>
+        <th><h1>مقدار کل پرداختی ها</h1></th>
+        <th><h1>افراد عضو شده</h1></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr
+            th:each="loan : ${loans}">
+        <td th:text="${loan.id}" />
+        <td th:text="${loan.name}" />
+        <td th:text="${loan.joinCount}" />
+        <td th:text="${loan.amount}" />
+        <td th:text="${loan.allAmount}" />
+        <td class="details"><a th:href="@{'/loans/user/' + ${loan.id}}">مشاهده</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

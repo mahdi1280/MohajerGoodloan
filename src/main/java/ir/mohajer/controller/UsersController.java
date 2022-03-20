@@ -1,6 +1,7 @@
 package ir.mohajer.controller;
 
 import ir.mohajer.dto.response.DetailsResponse;
+import ir.mohajer.dto.response.UserLoanResponse;
 import ir.mohajer.exception.ErrorMessage;
 import ir.mohajer.exception.RuleException;
 import ir.mohajer.model.Installments;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
@@ -37,7 +39,7 @@ public class UsersController {
         List<UserLoan> byUser = userLoanService.findByUser(user);
         DetailsResponse detailsResponse= createDetailsResponse(user,byUser);
         model.addAttribute("userLoan",detailsResponse);
-        return "loans";
+        return "userLoan";
     }
 
     @GetMapping("/details/{id}")
@@ -51,7 +53,17 @@ public class UsersController {
         private DetailsResponse createDetailsResponse(Users user, List<UserLoan> byUser) {
         return DetailsResponse.builder()
                 .setUsers(user)
-                .setUserLoans(byUser)
+                .setUserLoans(createUserLoanResponse(byUser))
                 .build();
+    }
+
+    private List<UserLoanResponse> createUserLoanResponse(List<UserLoan> byUser) {
+        return byUser.stream().map( u-> UserLoanResponse.builder()
+                .setAmount(installmentsService.getAmountByLoanUser(u))
+                .setLoan(u.getLoan())
+                .setId(u.getId())
+                .setWinner(u.isWinner())
+                .build())
+                .collect(Collectors.toList());
     }
 }

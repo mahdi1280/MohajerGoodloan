@@ -1,5 +1,6 @@
 package ir.mohajer.service.userloan;
 
+import ir.mohajer.model.Loan;
 import ir.mohajer.model.UserLoan;
 import ir.mohajer.model.Users;
 import ir.mohajer.repository.UserLoanRepository;
@@ -25,5 +26,10 @@ public class UserLoanServiceImpl implements UserLoanService {
     @Override
     public Optional<UserLoan> findById(long id) {
         return userLoanRepository.findById(id);
+    }
+
+    @Override
+    public int getCountJoinLoan(Loan loan) {
+        return userLoanRepository.getCountJoinLoan(loan.getId());
     }
 }
