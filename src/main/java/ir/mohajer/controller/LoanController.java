@@ -1,6 +1,7 @@
 package ir.mohajer.controller;
 
 import ir.mohajer.dto.request.LoanRequest;
+import ir.mohajer.dto.request.UserRequest;
 import ir.mohajer.dto.response.LoanResponse;
 import ir.mohajer.dto.response.UserResponse;
 import ir.mohajer.exception.ErrorMessage;
@@ -42,10 +43,12 @@ public class LoanController {
         if(loan.isPresent()) {
             result.rejectValue("name", "error.user", "exist name");
         }
-        Loan saveLoan=createLoan(loanRequest);
-        loanService.save(saveLoan);
+        if(!result.hasFieldErrors()) {
+            Loan saveLoan = createLoan(loanRequest);
+            loanService.save(saveLoan);
+        }
         List<LoanResponse> loanResponse = createLoanResponse(loanService.findAll());
-        model.addAttribute("loans",loanResponse);
+        model.addAttribute("loans", loanResponse);
         return "loan";
     }
 
@@ -57,7 +60,7 @@ public class LoanController {
     }
 
     @GetMapping("/user/{loanId}")
-    public String getUserLoan(@PathVariable long loanId,Model model){
+    public String getUserLoan(@PathVariable long loanId, Model model, UserRequest userRequest){
         Loan loan = loanService.findById(loanId).orElseThrow(() -> new RuleException(ErrorMessage.error("loan.not.found")));
         List<UserLoan> byLoan = userLoanService.findByLoan(loan);
         List<UserResponse> users = createUsers(byLoan);

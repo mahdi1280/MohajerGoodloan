@@ -25,4 +25,14 @@ public class UserServiceImpl implements UsersService {
     public Optional<Users> findById(long id) {
         return usersRepository.findById(id);
     }
+
+    @Override
+    public Optional<Users> findByUserName(String name) {
+        return usersRepository.findByName(name);
+    }
+
+    @Override
+    public void save(Users users) {
+        usersRepository.save(users);
+    }
 }

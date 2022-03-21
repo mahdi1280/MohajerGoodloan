@@ -1,11 +1,15 @@
 package ir.mohajer.controller;
 
+import ir.mohajer.dto.request.UserRequest;
 import ir.mohajer.dto.response.UserResponse;
 import ir.mohajer.model.Users;
 import ir.mohajer.service.userservice.UsersService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +24,7 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, UserRequest userRequest){
         List<Users> all = usersService.findAll();
         List<UserResponse> userResponses = createUserResponse(all);
         model.addAttribute("users",userResponses);

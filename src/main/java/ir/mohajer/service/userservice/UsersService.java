@@ -10,4 +10,9 @@ public interface UsersService {
     List<Users> findAll();
 
     Optional<Users> findById(long id);
+
+    Optional<Users> findByUserName(String name);
+
+    void save(Users users);
+
 }

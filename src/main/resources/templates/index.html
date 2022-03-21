@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -33,27 +33,60 @@
         <td class="details"><a th:href="@{'/users/' + ${user.id}}">جزییات</a></td>
     </tr>
     </tbody>
-
-    <button class="open-button" onclick="openForm()">ایجاد</button>
-    <div class="form-popup" id="myForm">
-        <form action="#" th:action="@{/users}" th:object="${userRequest}" method="post" class="form-container">
-            <h1>قرض الحسنه</h1>
-            <div class="form-group">
-                <label for="name"><b>نام</b></label>
-                <input class="form-control" type="text"  th:field="*{name}" id="name" placeholder="نام" name="name">
-                <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-                <p th:if="${#fields.hasErrors('name')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
-            </div>
-            <div class="form-group">
-                <label for="amount"><b>مقدار پول</b></label>
-                <input class="form-control" type="number"  th:field="*{amount}" id="amount" placeholder="مقدار پول" name="name">
-                <div class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
-                <p th:if="${#fields.hasErrors('amount')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
-            </div>
-            <button type="submit" class="btn">ایجاد</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">بستن</button>
-        </form>
-    </div>
 </table>
+<button class="open-button" onclick="openForm()">ایجاد</button>
+<div class="form-popup" id="myForm">
+    <form action="#" th:action="@{/users}" th:object="${userRequest}" method="post" class="form-container">
+        <h1>ثبت نام</h1>
+        <div class="form-group">
+            <label for="name"><b>نام</b></label>
+            <input class="form-control" type="text"  th:field="*{name}" id="name" placeholder="نام" name="name">
+            <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            <p th:if="${#fields.hasErrors('name')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <div class="form-group">
+            <label for="username"><b>نام کاربری</b></label>
+            <input class="form-control" type="text"  th:field="*{username}" id="username" placeholder="نام کاربری" name="username">
+            <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+            <p th:if="${#fields.hasErrors('username')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <div class="form-group">
+            <label for="amount"><b>کد ملی</b></label>
+            <input class="form-control" type="text"  th:field="*{nationalCode}" id="amount" placeholder="کد ملی" name="nationalCode">
+            <div class="error" th:if="${#fields.hasErrors('nationalCode')}" th:errors="*{nationalCode}"></div>
+            <p th:if="${#fields.hasErrors('nationalCode')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <div class="form-group">
+            <label for="password"><b>مقدار پول</b></label>
+            <input class="form-control" type="password"  th:field="*{password}" id="password" placeholder="گذرواژه" name="password">
+            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <p th:if="${#fields.hasErrors('password')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <div class="form-group">
+            <label for="rePassword"><b>مقدار پول</b></label>
+            <input class="form-control" type="password"  th:field="*{rePassword}" id="rePassword" placeholder="تکرار گذرواژه" name="rePassword">
+            <div class="error" th:if="${#fields.hasErrors('rePassword')}" th:errors="*{rePassword}"></div>
+            <p th:if="${#fields.hasErrors('rePassword')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <div class="form-group">
+            <label for="email"><b>ایمیل</b></label>
+            <input class="form-control" type="email"  th:field="*{email}" id="email" placeholder="ایمیل" name="email">
+            <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            <p th:if="${#fields.hasErrors('email')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <button type="submit" class="btn">ایجاد</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">بستن</button>
+    </form>
+</div>
+
+<script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+</script>
 </body>
 </html>

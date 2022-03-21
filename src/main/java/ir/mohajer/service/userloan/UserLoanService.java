@@ -16,4 +16,5 @@ public interface UserLoanService {
     int getCountJoinLoan(Loan loan);
 
     List<UserLoan> findByLoan(Loan loan);
+
 }

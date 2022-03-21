@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserLoanRepository extends JpaRepository<UserLoan,Long> {
 
@@ -16,5 +17,4 @@ public interface UserLoanRepository extends JpaRepository<UserLoan,Long> {
     int getCountJoinLoan(long loanId);
 
     List<UserLoan> findByLoan(Loan loan);
-
 }

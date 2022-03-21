@@ -1,5 +1,6 @@
 package ir.mohajer.controller;
 
+import ir.mohajer.dto.request.UserRequest;
 import ir.mohajer.dto.response.DetailsResponse;
 import ir.mohajer.dto.response.UserLoanResponse;
 import ir.mohajer.dto.response.UserResponse;
@@ -13,11 +14,13 @@ import ir.mohajer.service.userloan.UserLoanService;
 import ir.mohajer.service.userservice.UsersService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -34,7 +37,6 @@ public class UsersController {
         this.installmentsService = installmentsService;
     }
 
-    @
     @GetMapping("/{id}")
     public String showLoan(@PathVariable long id, Model model){
         Users user = usersService.findById(id).orElseThrow(()->new RuleException(ErrorMessage.error("user.not.found")));
@@ -42,6 +44,33 @@ public class UsersController {
         DetailsResponse detailsResponse= createDetailsResponse(user,byUser);
         model.addAttribute("userLoan",detailsResponse);
         return "userLoan";
+    }
+
+    @PostMapping
+    public String save(@ModelAttribute UserRequest userRequest, Model model, BindingResult bindingResult){
+        if(!userRequest.getPassword().equals(userRequest.getRePassword()))
+            bindingResult.rejectValue("rePassword","error.users","rePassword by password not same!");
+        Optional<Users> byUserName = usersService.findByUserName(userRequest.getName());
+        if(byUserName.isPresent())
+            bindingResult.rejectValue("username","error.users","username is exist");
+        if(!bindingResult.hasFieldErrors()){
+            Users users=createUsers(userRequest);
+            usersService.save(users);
+        }
+        List<Users> all = usersService.findAll();
+        List<UserResponse> userResponses = createUserResponse(all);
+        model.addAttribute("users",userResponses);
+        return "index";
+    }
+
+    private Users createUsers(UserRequest userRequest) {
+        return Users.builder()
+                .setUsername(userRequest.getUsername())
+                .setPassword(userRequest.getPassword())
+                .setEmail(userRequest.getEmail())
+                .setName(userRequest.getName())
+                .setNationalCode(userRequest.getNationalCode())
+                .build();
     }
 
     @GetMapping("/details/{id}")
@@ -74,6 +103,15 @@ public class UsersController {
                 .setId(u.getId())
                 .setWinner(u.isWinner())
                 .build())
+                .collect(Collectors.toList());
+    }
+
+    private List<UserResponse> createUserResponse(List<Users> all) {
+        return all.stream().map(user-> UserResponse.builder()
+                        .setName(user.getName())
+                        .setId(user.getId())
+                        .setNationalCode(user.getNationalCode())
+                        .build())
                 .collect(Collectors.toList());
     }
 }
