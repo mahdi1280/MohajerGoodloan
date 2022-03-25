@@ -17,4 +17,6 @@ public interface UserLoanRepository extends JpaRepository<UserLoan,Long> {
     int getCountJoinLoan(long loanId);
 
     List<UserLoan> findByLoan(Loan loan);
+
+    Optional<UserLoan> findByUsersAndLoan(Users users,Loan loan);
 }

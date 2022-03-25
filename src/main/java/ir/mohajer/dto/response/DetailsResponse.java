@@ -7,10 +7,12 @@ public class DetailsResponse implements Serializable {
 
     private final UserResponse userResponse;
     private final List<UserLoanResponse> userLoans;
+    private final List<LoanResponse> loanResponses;
 
-    public DetailsResponse(UserResponse userResponse, List<UserLoanResponse> userLoans) {
+    public DetailsResponse(UserResponse userResponse, List<UserLoanResponse> userLoans,List<LoanResponse> loanResponses) {
         this.userResponse = userResponse;
         this.userLoans = userLoans;
+        this.loanResponses=loanResponses;
     }
 
     public static Builder builder(){
@@ -25,10 +27,15 @@ public class DetailsResponse implements Serializable {
         return userLoans;
     }
 
+    public List<LoanResponse> getLoanResponses() {
+        return loanResponses;
+    }
+
     public static class Builder{
 
         private UserResponse userResponse;
         private List<UserLoanResponse> userLoans;
+        private List<LoanResponse> loanResponses;
 
         private Builder() {
         }
@@ -43,8 +50,13 @@ public class DetailsResponse implements Serializable {
             return this;
         }
 
+        public Builder setLoanResponses(List<LoanResponse> loanResponses) {
+            this.loanResponses = loanResponses;
+            return this;
+        }
+
         public DetailsResponse build(){
-            return new DetailsResponse(userResponse,userLoans);
+            return new DetailsResponse(userResponse,userLoans,loanResponses);
         }
     }
 }

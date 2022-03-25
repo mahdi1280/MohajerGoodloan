@@ -14,6 +14,18 @@ public class UserLoan extends BaseEntity{
     private Loan loan;
     private boolean winner=false;
 
+    public UserLoan(Users users, Loan loan) {
+        this.users = users;
+        this.loan = loan;
+    }
+
+    public UserLoan() {
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
     @CreatedDate
     public LocalDateTime getCreationDate() {
         return creationDate;
@@ -48,5 +60,27 @@ public class UserLoan extends BaseEntity{
 
     public void setWinner(boolean winner) {
         this.winner = winner;
+    }
+
+    public static class Builder {
+
+        private Users users;
+        private Loan loan;
+
+        private Builder(){}
+
+        public Builder setUsers(Users users) {
+            this.users = users;
+            return this;
+        }
+
+        public Builder setLoan(Loan loan) {
+            this.loan = loan;
+            return this;
+        }
+
+        public UserLoan build(){
+            return new UserLoan(users,loan);
+        }
     }
 }

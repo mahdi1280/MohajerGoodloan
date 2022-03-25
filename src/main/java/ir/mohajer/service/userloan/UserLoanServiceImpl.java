@@ -37,4 +37,14 @@ public class UserLoanServiceImpl implements UserLoanService {
     public List<UserLoan> findByLoan(Loan loan) {
         return userLoanRepository.findByLoan(loan);
     }
+
+    @Override
+    public void save(UserLoan userLoan) {
+        userLoanRepository.save(userLoan);
+    }
+
+    @Override
+    public Optional<UserLoan> findByUserAndLoan(Users users, Loan loan) {
+        return userLoanRepository.findByUsersAndLoan(users,loan);
+    }
 }

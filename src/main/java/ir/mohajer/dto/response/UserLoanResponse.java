@@ -9,9 +9,9 @@ public class UserLoanResponse implements Serializable {
     private final long id;
     private final Loan loan;
     private final boolean winner;
-    private final int amount;
+    private final Integer amount;
 
-    public UserLoanResponse(long id, Loan loan, boolean winner, int amount) {
+    public UserLoanResponse(long id, Loan loan, boolean winner, Integer amount) {
         this.id = id;
         this.loan = loan;
         this.winner = winner;
@@ -34,7 +34,7 @@ public class UserLoanResponse implements Serializable {
         return winner;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
@@ -43,7 +43,7 @@ public class UserLoanResponse implements Serializable {
         private long id;
         private Loan loan;
         private boolean winner;
-        private int amount;
+        private Integer amount;
 
         private Builder(){}
 
@@ -62,7 +62,7 @@ public class UserLoanResponse implements Serializable {
             return this;
         }
 
-        public Builder setAmount(int amount) {
+        public Builder setAmount(Integer amount) {
             this.amount = amount;
             return this;
         }
