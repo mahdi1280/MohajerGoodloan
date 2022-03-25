@@ -18,5 +18,7 @@ public interface UserLoanRepository extends JpaRepository<UserLoan,Long> {
 
     List<UserLoan> findByLoan(Loan loan);
 
+    List<UserLoan> findByLoanAndWinnerFalse(Loan loan);
+
     Optional<UserLoan> findByUsersAndLoan(Users users,Loan loan);
 }

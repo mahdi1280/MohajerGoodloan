@@ -17,6 +17,8 @@ public interface UserLoanService {
 
     List<UserLoan> findByLoan(Loan loan);
 
+    List<UserLoan> findByLoanAndWinnerFalse(Loan loan);
+
     void save(UserLoan userLoan);
 
     Optional<UserLoan> findByUserAndLoan(Users users, Loan loan);

@@ -31,7 +31,7 @@
             <td th:text="${user.amount}" />
             <td>
                 <span th:if="${user.winner == false}" class="status">برنده نشده</span>
-                <span th:if="${user.winner == true}" class="status">برنده شده</span>
+                <span th:if="${user.winner == true}" class="statusG">برنده شده</span>
             </td>
             <td class="details"><a th:href="@{'/users/details/' + ${user.id}}">جزییات</a></td>
         </tr>

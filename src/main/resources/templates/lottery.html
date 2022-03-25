@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+    <style th:insert="styleTable"></style>
+</head>
+<body>
+<div th:insert="header">...</div>
+<form action="#" th:action="@{/lottery/name}" th:object="${lotteryRequest}" method="post">
+<div class="btnContainer">
+    <button class="button-52" role="button"><a>درهم سازی</a></button>
+    <select class="option" id="nameA" onchange="getComboA(this)">
+        <option th:each="i : ${lotteryFindResponse.name}" th:value="${i}" th:text="${i}">
+        </option>
+    </select>
+</div>
+    <input class="form-control" type="hidden"  th:field="*{name}" id="name" placeholder="نام" name="name">
+</form>
+<table class="container">
+
+    <thead>
+    <tr>
+        <th><h1>ردیف</h1></th>
+        <th><h1>نام و نام خانوادگی</h1></th>
+        <th><h1>کد ملی</h1></th>
+        <th><h1>مقدار</h1></th>
+        <th><h1>وضعیت</h1></th>
+        <th><h1>برنده</h1></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr
+            th:each="lottery : ${lotteryFindResponse.lotteryFindResponses}">
+        <td th:text="${lottery.id}" />
+        <td th:text="${lottery.username}" />
+        <td th:text="${lottery.nationalCode}" />
+        <td th:text="${lottery.amount}" />
+        <td>
+            <span th:if="${lottery.winner == false}" class="status">برنده نشده</span>
+            <span th:if="${lottery.winner == true}" class="status">برنده شده</span>
+        </td>
+        <td class="details"><a th:href="@{'/lottery/winner/' + ${lottery.id}}">برنده</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function getComboA(selectObject) {
+        document.getElementById("name").value =selectObject.value;
+    }
+</script>
+</body>
+</html>
