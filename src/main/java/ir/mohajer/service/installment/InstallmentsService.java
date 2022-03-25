@@ -13,4 +13,6 @@ public interface InstallmentsService {
     Integer getAmountByLoanUser(UserLoan userLoan);
 
     Integer getAllAmountByLoan(Loan loan);
+
+    void save(Installments installments);
 }

@@ -31,4 +31,9 @@ public class InstallmentsServiceImpl implements InstallmentsService {
     public Integer getAllAmountByLoan(Loan loan) {
         return installmentsRepository.getAllAmountByLoan(loan.getId());
     }
+
+    @Override
+    public void save(Installments installments) {
+        installmentsRepository.save(installments);
+    }
 }

@@ -21,12 +21,45 @@
         </thead>
         <tbody>
         <tr
-                th:each="detail : ${details}">
+                th:each="detail : ${details.installmentsResponses}">
             <td th:text="${detail.id}" />
             <td th:text="${detail.amount}" />
-            <td th:text="${detail.creationDate}" />
+            <td th:text="${detail.createdDate}" />
         </tr>
         </tbody>
     </table>
+
+<button class="open-button" onclick="openForm()">ایجاد</button>
+
+<input type="hidden" id="hiddenText" th:value="${details.userLoanId}"/>
+
+<div class="form-popup" id="myForm">
+    <form action="#" th:action="@{/details}" th:object="${detailsRequest}" method="post" class="form-container">
+        <h1>قرض الحسنه</h1>
+        <div class="form-group">
+            <input class="form-control"  type="hidden" th:field="*{loanId}" id="loanId" placeholder="آیدی" name="loanId">
+            <div class="error" th:if="${#fields.hasErrors('loanId')}" th:errors="*{loanId}"></div>
+            <p th:if="${#fields.hasErrors('loanId')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <div class="form-group">
+            <label for="amount"><b>مقدار پول</b></label>
+            <input class="form-control" type="number"  th:field="*{amount}" id="amount" placeholder="مقدار پول" name="name">
+            <div class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></div>
+            <p th:if="${#fields.hasErrors('amount')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <button type="submit" class="btn">ایجاد</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">بستن</button>
+    </form>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("loanId").value=document.getElementById("hiddenText").value;
+        document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+</script>
 </body>
 </html>

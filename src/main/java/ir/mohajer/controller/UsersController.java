@@ -1,11 +1,9 @@
 package ir.mohajer.controller;
 
+import ir.mohajer.dto.request.DetailsRequest;
 import ir.mohajer.dto.request.UserLoanRequest;
 import ir.mohajer.dto.request.UserRequest;
-import ir.mohajer.dto.response.DetailsResponse;
-import ir.mohajer.dto.response.LoanResponse;
-import ir.mohajer.dto.response.UserLoanResponse;
-import ir.mohajer.dto.response.UserResponse;
+import ir.mohajer.dto.response.*;
 import ir.mohajer.exception.ErrorMessage;
 import ir.mohajer.exception.RuleException;
 import ir.mohajer.model.Installments;
@@ -78,11 +76,29 @@ public class UsersController {
     }
 
     @GetMapping("/details/{id}")
-    public String showLoanDetails(@PathVariable long id, Model model){
+    public String showLoanDetails(@PathVariable long id, Model model, DetailsRequest detailsRequest){
         UserLoan userLoan = userLoanService.findById(id).orElseThrow(() -> new RuleException(ErrorMessage.error("user.loan.not.found")));
         List<Installments> byLoanUserId = installmentsService.findByLoanUserId(userLoan);
-        model.addAttribute("details",byLoanUserId);
+        DetailsFindResponse detailsFindResponse=createDetailsFindResponse(userLoan,byLoanUserId);
+        model.addAttribute("details",detailsFindResponse);
         return "details";
+    }
+
+    private DetailsFindResponse createDetailsFindResponse(UserLoan userLoan, List<Installments> byLoanUserId) {
+        return DetailsFindResponse.builder()
+                .setInstallmentsResponses(createInstallmentsResponses(byLoanUserId))
+                .setUserLoanId(userLoan.getId())
+                .build();
+    }
+
+    private List<InstallmentsResponse> createInstallmentsResponses(List<Installments> byLoanUserId) {
+        return byLoanUserId.stream().map(installments ->
+                InstallmentsResponse.builder()
+                        .setCreatedDate(installments.getCreationDate())
+                        .setId(installments.getId())
+                        .setAmount(installments.getAmount())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     private DetailsResponse createDetailsResponse(Users user, List<UserLoan> byUser) {

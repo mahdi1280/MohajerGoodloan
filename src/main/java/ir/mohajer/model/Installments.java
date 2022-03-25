@@ -1,5 +1,6 @@
 package ir.mohajer.model;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Entity;
@@ -7,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(schema = Schema.SCHEMA_NAME)
@@ -17,6 +17,18 @@ public class Installments extends BaseEntity {
     private LocalDate creationDate;
     private UserLoan userLoan;
 
+    public Installments(int amount, UserLoan userLoan) {
+        this.amount = amount;
+        this.userLoan = userLoan;
+    }
+
+    public Installments() {
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
     public int getAmount() {
         return amount;
     }
@@ -25,7 +37,7 @@ public class Installments extends BaseEntity {
         this.amount = amount;
     }
 
-    @CreatedDate
+    @CreationTimestamp
     public LocalDate getCreationDate() {
         return creationDate;
     }
@@ -41,5 +53,27 @@ public class Installments extends BaseEntity {
 
     public void setUserLoan(UserLoan userLoan) {
         this.userLoan = userLoan;
+    }
+
+    public static class Builder {
+
+        private int amount;
+        private UserLoan userLoan;
+
+        private Builder(){}
+
+        public Builder setAmount(int amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public Builder setUserLoan(UserLoan userLoan) {
+            this.userLoan = userLoan;
+            return this;
+        }
+
+        public Installments build(){
+            return new Installments(amount,userLoan);
+        }
     }
 }
