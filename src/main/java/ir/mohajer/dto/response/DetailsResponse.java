@@ -8,14 +8,16 @@ public class DetailsResponse implements Serializable {
     private final UserResponse userResponse;
     private final List<UserLoanResponse> userLoans;
     private final List<LoanResponse> loanResponses;
+    private final Integer allPrice;
 
-    public DetailsResponse(UserResponse userResponse, List<UserLoanResponse> userLoans,List<LoanResponse> loanResponses) {
+    public DetailsResponse(UserResponse userResponse, List<UserLoanResponse> userLoans, List<LoanResponse> loanResponses, Integer allPrice) {
         this.userResponse = userResponse;
         this.userLoans = userLoans;
-        this.loanResponses=loanResponses;
+        this.loanResponses = loanResponses;
+        this.allPrice = allPrice;
     }
 
-    public static Builder builder(){
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -31,11 +33,16 @@ public class DetailsResponse implements Serializable {
         return loanResponses;
     }
 
-    public static class Builder{
+    public Integer allPrice() {
+        return allPrice;
+    }
+
+    public static class Builder {
 
         private UserResponse userResponse;
         private List<UserLoanResponse> userLoans;
         private List<LoanResponse> loanResponses;
+        private Integer allPrice;
 
         private Builder() {
         }
@@ -55,8 +62,13 @@ public class DetailsResponse implements Serializable {
             return this;
         }
 
-        public DetailsResponse build(){
-            return new DetailsResponse(userResponse,userLoans,loanResponses);
+        public Builder setAllPrice(Integer allPrice) {
+            this.allPrice = allPrice;
+            return this;
+        }
+
+        public DetailsResponse build() {
+            return new DetailsResponse(userResponse, userLoans, loanResponses, allPrice);
         }
     }
 }

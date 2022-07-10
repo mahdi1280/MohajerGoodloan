@@ -140,6 +140,7 @@ public class UsersController {
                 .setUserResponse(createUserResponse(user))
                 .setUserLoans(createUserLoanResponse(byUser))
                 .setLoanResponses(createLoanResponse())
+                .setAllPrice(userPropertyService.getAllPriceByUser(user))
                 .build();
     }
 

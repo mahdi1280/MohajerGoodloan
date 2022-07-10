@@ -14,4 +14,5 @@ public interface UserPropertyService {
 
     void save(UserProperty userProperty);
 
+    int getAllPriceByUser(Users user);
 }

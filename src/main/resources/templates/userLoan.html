@@ -12,11 +12,17 @@
             text-align: center;
             margin: auto;
         }
+        .price-p{
+            font-size: 20px;
+            color: yellow;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div th:insert="header">...</div>
     <h2 th:text="'نام:'+ ${userLoan.userResponse.name}"/>
+    <p class="price-p">موجودی شما : <span th:text="${userLoan.allPrice}"></span></p>
     <a class="btn btn-price btn-primary" th:href="@{'/users/price/' + ${userLoan.userResponse.id}}">افزایش موجودی</a>
     <table class="container">
         <thead>

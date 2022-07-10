@@ -30,4 +30,10 @@ public class UserPropertyServiceImpl implements UserPropertyService {
     public void save(UserProperty userProperty) {
         userPropertyRepository.save(userProperty);
     }
+
+    @Override
+    public int getAllPriceByUser(Users user) {
+        Integer allPriceByUser = userPropertyRepository.getAllPriceByUser(user.getId());
+        return allPriceByUser==null ? 0 : allPriceByUser;
+    }
 }
