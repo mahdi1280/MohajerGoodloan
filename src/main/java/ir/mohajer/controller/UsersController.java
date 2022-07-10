@@ -2,6 +2,7 @@ package ir.mohajer.controller;
 
 import ir.mohajer.dto.request.DetailsRequest;
 import ir.mohajer.dto.request.UserLoanRequest;
+import ir.mohajer.dto.request.UserPropertyRequest;
 import ir.mohajer.dto.request.UserRequest;
 import ir.mohajer.dto.response.*;
 import ir.mohajer.exception.ErrorMessage;
@@ -76,11 +77,19 @@ public class UsersController {
     }
 
     @GetMapping("/price/{userId}")
-    public String showPrice(@PathVariable long userId,Model model){
+    public String showPrice(@PathVariable long userId, Model model, UserPropertyRequest userPropertyRequest) {
         Users users = usersService.findById(userId).orElseThrow(() -> new RuleException(ErrorMessage.error("not.found.user")));
         List<UserProperty> allByUser = userPropertyService.findAllByUser(users);
-        model.addAttribute("userPrice",allByUser);
+        model.addAttribute("userPrice", createUserPropertyResponse(users, allByUser));
         return "userPrice";
+    }
+
+    private UserPropertyResponse createUserPropertyResponse(Users users, List<UserProperty> allByUser) {
+        return UserPropertyResponse.builder()
+                .id(users.getId())
+                .username(users.getUsername())
+                .userProperties(allByUser)
+                .build();
     }
 
     private DetailsFindResponse createDetailsFindResponse(UserLoan userLoan, List<Installments> byLoanUserId) {
