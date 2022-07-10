@@ -11,4 +11,7 @@ public interface UserPropertyService {
     List<UserProperty> findAll();
 
     List<UserProperty> findAllByUser(Users users);
+
+    void save(UserProperty userProperty);
+
 }

@@ -40,7 +40,7 @@
         <h1>قرض الحسنه</h1>
         <div class="form-group">
             <label for="price"><b>مقدار</b></label>
-            <input  class="form-control" type="number" th:field="*{price}" id="price" placeholder="نام" name="name">
+            <input  class="form-control" type="number" th:field="*{price}" id="price" placeholder="مقدار" name="name">
             <div class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
             <p th:if="${#fields.hasErrors('price')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
         </div>

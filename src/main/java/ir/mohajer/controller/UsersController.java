@@ -13,12 +13,14 @@ import ir.mohajer.service.loan.LoanService;
 import ir.mohajer.service.userloan.UserLoanService;
 import ir.mohajer.service.userproperty.UserPropertyService;
 import ir.mohajer.service.userservice.UsersService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -83,6 +85,30 @@ public class UsersController {
         model.addAttribute("userPrice", createUserPropertyResponse(users, allByUser));
         return "userPrice";
     }
+
+    @PostMapping("/userProperty")
+    public String save(@ModelAttribute UserPropertyRequest userPropertyRequest, Model model, BindingResult bindingResult) {
+        if(userPropertyRequest.getPrice()==null)
+            bindingResult.rejectValue("price","error.users","price is null");
+        else if(userPropertyRequest.getUserId()==null)
+            bindingResult.rejectValue("userId","error.users","user id is null");
+        Users users = usersService.findById(userPropertyRequest.getUserId()).orElseThrow(() -> new RuleException(ErrorMessage.error("user.not.found")));
+        if(!bindingResult.hasFieldErrors()) {
+            UserProperty userProperty = createUserProperty(userPropertyRequest, users);
+            userPropertyService.save(userProperty);
+        }
+        List<UserProperty> allByUser = userPropertyService.findAllByUser(users);
+        model.addAttribute("userPrice", createUserPropertyResponse(users, allByUser));
+        return "userPrice";
+    }
+
+    private UserProperty createUserProperty(UserPropertyRequest userPropertyRequest, Users users) {
+        return UserProperty.builder()
+                .user(users)
+                .price(userPropertyRequest.getPrice())
+                .build();
+    }
+
 
     private UserPropertyResponse createUserPropertyResponse(Users users, List<UserProperty> allByUser) {
         return UserPropertyResponse.builder()

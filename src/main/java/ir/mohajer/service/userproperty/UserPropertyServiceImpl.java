@@ -25,4 +25,9 @@ public class UserPropertyServiceImpl implements UserPropertyService {
     public List<UserProperty> findAllByUser(Users users) {
         return userPropertyRepository.findAllByUser(users);
     }
+
+    @Override
+    public void save(UserProperty userProperty) {
+        userPropertyRepository.save(userProperty);
+    }
 }
