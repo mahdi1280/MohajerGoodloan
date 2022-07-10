@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+    <style th:insert="styleTable"></style>
+</head>
+<body>
+<div th:insert="header">...</div>
+<p>هرینه های کل: <span th:text="${extra.allPrice}"></span></p>
+<table class="container">
+
+    <thead>
+    <tr>
+        <th><h1>ردیف</h1></th>
+        <th><h1>مقدار</h1></th>
+        <th><h1>توضیحات</h1></th>
+        <th><h1>تاریخ</h1></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr
+            th:each="extra : ${extra}">
+        <td th:text="${extra.id}" />
+        <td th:text="${extra.price}" />
+        <td th:text="${extra.details}" />
+        <td th:text="${extra.createdAt}" />
+    </tr>
+    </tbody>
+</table>
+<button class="open-button" onclick="openForm()">ایجاد</button>
+<div class="form-popup" id="myForm">
+    <form action="#" th:action="@{/extra}" th:object="${extraRequest}" method="post" class="form-container">
+        <h1>ثبت نام</h1>
+        <div class="form-group">
+            <label for="price"><b>مقدار</b></label>
+            <input class="form-control" type="number"  th:field="*{price}" id="price" placeholder="مقدار" name="price">
+            <div class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+            <p th:if="${#fields.hasErrors('price')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <div class="form-group">
+            <label for="details"><b>توضیحات</b></label>
+            <input class="form-control" type="text"  th:field="*{details}" id="details" placeholder="توضیحات " name="details">
+            <div class="error" th:if="${#fields.hasErrors('details')}" th:errors="*{details}"></div>
+            <p th:if="${#fields.hasErrors('details')}"> <script> document.getElementById("myForm").style.display = "block";</script></p>
+        </div>
+        <button type="submit" class="btn">ایجاد</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">بستن</button>
+    </form>
+</div>
+
+<script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+</script>
+</body>
+</html>

@@ -63,7 +63,7 @@ public class ExtraExpenses extends BaseEntity {
             return this;
         }
 
-        public Builder builder(String details){
+        public Builder details(String details){
             this.details=details;
             return this;
         }
