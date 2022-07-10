@@ -1,6 +1,7 @@
 package ir.mohajer.controller;
 
 import ir.mohajer.dto.request.ExtraRequest;
+import ir.mohajer.dto.response.ExtraExpensesResponse;
 import ir.mohajer.model.ExtraExpenses;
 import ir.mohajer.service.extraexpenses.ExtraExpensesService;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/extra")
@@ -26,7 +28,7 @@ public class ExtraExpensesController {
     @GetMapping
     public String getExtra(Model model, ExtraRequest extraRequest){
         List<ExtraExpenses> all = extraExpensesService.findAll();
-        model.addAttribute("extra",all);
+        model.addAttribute("extra",createExtraExpensesResponse(all));
         return "extra";
     }
 
@@ -42,10 +44,14 @@ public class ExtraExpensesController {
             extraExpensesService.save(extraExpenses);
         }
         List<ExtraExpenses> all = extraExpensesService.findAll();
-        model.addAttribute("extra",all);
+        model.addAttribute("extra",createExtraExpensesResponse(all));
         return "extra";
-
     }
+
+    private ExtraExpensesResponse createExtraExpensesResponse(List<ExtraExpenses> all) {
+       return new ExtraExpensesResponse(all,extraExpensesService.getAllPrice());
+    }
+
 
     private ExtraExpenses createExtra(ExtraRequest extraRequest) {
         return ExtraExpenses.builder()

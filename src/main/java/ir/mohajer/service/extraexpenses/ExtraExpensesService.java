@@ -10,4 +10,6 @@ public interface ExtraExpensesService {
 
     List<ExtraExpenses> findAll();
 
+    int getAllPrice();
+
 }

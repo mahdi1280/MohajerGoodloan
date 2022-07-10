@@ -24,4 +24,10 @@ public class ExtraExpensesServiceImpl implements ExtraExpensesService {
     public List<ExtraExpenses> findAll() {
         return extraExpensesRepository.findAll();
     }
+
+    @Override
+    public int getAllPrice() {
+        Integer allPrice = extraExpensesRepository.getAllPrice();
+        return allPrice ==null ? 0 : allPrice;
+    }
 }

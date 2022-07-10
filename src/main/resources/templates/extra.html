@@ -6,11 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Index</title>
-    <style th:insert="styleTable"></style>
+    <style th:insert="styleTable">
+
+    </style>
 </head>
 <body>
 <div th:insert="header">...</div>
-<p>هرینه های کل: <span th:text="${extra.allPrice}"></span></p>
+<p class="text-center price1">هرینه های کل: <span th:text="${extra.allPrice}"></span></p>
 <table class="container">
 
     <thead>
@@ -23,7 +25,7 @@
     </thead>
     <tbody>
     <tr
-            th:each="extra : ${extra}">
+            th:each="extra : ${extra.extraExpenses}">
         <td th:text="${extra.id}" />
         <td th:text="${extra.price}" />
         <td th:text="${extra.details}" />
