@@ -6,13 +6,11 @@ import ir.mohajer.dto.request.UserRequest;
 import ir.mohajer.dto.response.*;
 import ir.mohajer.exception.ErrorMessage;
 import ir.mohajer.exception.RuleException;
-import ir.mohajer.model.Installments;
-import ir.mohajer.model.Loan;
-import ir.mohajer.model.UserLoan;
-import ir.mohajer.model.Users;
+import ir.mohajer.model.*;
 import ir.mohajer.service.installment.InstallmentsService;
 import ir.mohajer.service.loan.LoanService;
 import ir.mohajer.service.userloan.UserLoanService;
+import ir.mohajer.service.userproperty.UserPropertyService;
 import ir.mohajer.service.userservice.UsersService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,12 +29,14 @@ public class UsersController {
     private final UsersService usersService;
     private final InstallmentsService installmentsService;
     private final LoanService loanService;
+    private final UserPropertyService userPropertyService;
 
-    public UsersController(UserLoanService userLoanService, UsersService usersService, InstallmentsService installmentsService, LoanService loanService) {
+    public UsersController(UserLoanService userLoanService, UsersService usersService, InstallmentsService installmentsService, LoanService loanService, UserPropertyService userPropertyService) {
         this.userLoanService = userLoanService;
         this.usersService = usersService;
         this.installmentsService = installmentsService;
         this.loanService = loanService;
+        this.userPropertyService = userPropertyService;
     }
 
     @GetMapping("/{id}")
@@ -65,15 +65,6 @@ public class UsersController {
         return "index";
     }
 
-    private Users createUsers(UserRequest userRequest) {
-        return Users.builder()
-                .setUsername(userRequest.getUsername())
-                .setPassword(userRequest.getPassword())
-                .setEmail(userRequest.getEmail())
-                .setName(userRequest.getName())
-                .setNationalCode(userRequest.getNationalCode())
-                .build();
-    }
 
     @GetMapping("/details/{id}")
     public String showLoanDetails(@PathVariable long id, Model model, DetailsRequest detailsRequest){
@@ -82,6 +73,14 @@ public class UsersController {
         DetailsFindResponse detailsFindResponse=createDetailsFindResponse(userLoan,byLoanUserId);
         model.addAttribute("details",detailsFindResponse);
         return "details";
+    }
+
+    @GetMapping("/price/{userId}")
+    public String showPrice(@PathVariable long userId,Model model){
+        Users users = usersService.findById(userId).orElseThrow(() -> new RuleException(ErrorMessage.error("not.found.user")));
+        List<UserProperty> allByUser = userPropertyService.findAllByUser(users);
+        model.addAttribute("userPrice",allByUser);
+        return "userPrice";
     }
 
     private DetailsFindResponse createDetailsFindResponse(UserLoan userLoan, List<Installments> byLoanUserId) {
@@ -143,5 +142,15 @@ public class UsersController {
                         .setNationalCode(user.getNationalCode())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    private Users createUsers(UserRequest userRequest) {
+        return Users.builder()
+                .setUsername(userRequest.getUsername())
+                .setPassword(userRequest.getPassword())
+                .setEmail(userRequest.getEmail())
+                .setName(userRequest.getName())
+                .setNationalCode(userRequest.getNationalCode())
+                .build();
     }
 }
